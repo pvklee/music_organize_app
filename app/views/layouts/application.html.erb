@@ -9,7 +9,19 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
+  <header>
+
+    <div>
+      <h1 class="header-title">MUSIC APP!</h1>
+    </div>
+    <div class="login-container">
+      <%= render "shared/user_login_info" %>
+    </div>
+  </div>
+  </header>
+
   <body>
     <%= yield %>
   </body>
+
 </html>
