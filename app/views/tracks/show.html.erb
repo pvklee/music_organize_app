@@ -1,0 +1,59 @@
+<h1><%= @track.title %></h1>
+
+<table>
+    <tr>
+        <th>Album</th>
+        <td><%= @track.album.title%></td>
+    </tr>
+    <tr>
+        <th>Band</th>
+        <td><%= @track.band.name%></td>
+    </tr>
+    <tr>
+        <th>Track Number</th>
+        <td><%= @track.ord%></td>
+    </tr>
+    <tr>
+        <th>Lyrics</th>
+        <td><%= ugly_lyrics(@track.lyrics) %></td>
+    </tr>
+    <tr>
+        <th>Track Type</th>
+        <td><%= @track.track_type%></td>
+    </tr>
+</table>
+
+<h2>Notes</h2>
+<% @track.notes.each do |note| %>
+    <h3><a href="<%= note_path(note) %>">Note by <%= note.user.email %></a></h3>
+    <p><%= note.note_text %></p>
+<% end %>
+<form action="<%= new_track_note_path(@track) %>" method="get">
+    <input type="submit" value="Add note!"> 
+</form>
+<br>
+<br>
+
+<form action="<%= edit_track_path(@track) %>" method="get">
+    <input type="submit" value="Edit track!"> 
+</form>
+
+<form action="<%= track_path(@track) %>" method="post">
+    <%= auth_token %>
+    <input name="_method" value="delete" type="hidden">
+    <input type="submit" value="Delete track!"> 
+</form>
+
+<br>
+
+<form action="<%= band_path(@track.band) %>" method="get">
+    <input type="submit" value="Back to <%= @track.band.name %>!"> 
+</form>
+
+<form action="<%= album_path(@track.album) %>" method="get">
+    <input type="submit" value="Back to <%= @track.album.title %>!"> 
+</form>
+
+<form action="<%= tracks_path %>" method="get">
+    <input type="submit" value="Back to all tracks!"> 
+</form>

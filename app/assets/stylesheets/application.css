@@ -13,3 +13,16 @@
  *= require_tree .
  *= require_self
  */
+
+.header-title {
+    font-family: Futura,Trebuchet MS,Arial,sans-serif;
+}
+
+body {
+    background-color: lightblue;
+}
+
+.login-container {
+     display: flex;
+     justify-content: flex-end;
+}

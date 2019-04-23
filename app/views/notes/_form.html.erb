@@ -1,0 +1,42 @@
+<% action = (note.persisted? ? note_url(note) : notes_url) %>
+<% method = (note.persisted? ? :patch : :post) %>
+<% message = (note.persisted? ? 'Update!' : 'Create!') %>
+<% track_id = (note.persisted? ? note.track.id : params[:track_id].to_i) %>
+
+<%= render 'shared/errors' %>
+<form action="<%= action %>" method="post">
+    <%= auth_token %>
+
+    <label for="note_track">Track</label>
+    <select
+        id="note_track"
+        name="note[track_id]">
+        <option disabled selected>-- select a track --</option>
+        <option disabled></option>
+        <% Band.all.each do |band| %>
+            <option disabled>-- <%= band.name.upcase %> --</option>
+            <% band.albums.each do |album| %>
+                <option disabled>-- <%= album.title %> --</option>
+                <% album.tracks.each do |track| %>
+                    <option
+                        <%= track.id == track_id ? "selected" : "" %>
+                        value="<%= track.id %>">
+                        <%= track.title %>
+                    </option>
+                <% end %>
+            <% end %>
+        <% end %>
+    </select>
+    <br>
+
+    <label>
+        Note text:
+        <textarea name = "note[note_text]"><%= note.note_text %></textarea>
+    </label>
+    <br>
+
+    <input 
+        type="submit"
+        value="<%= message %>">
+
+</form>

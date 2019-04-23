@@ -1,0 +1,11 @@
+<h1>Notes</h1>
+
+<% @notes.each do |note| %>
+<ul>
+    <li>Note for <%= note.track.title %></li>
+    <li>Written by <%= note.user.email %></li>
+    <li><a href="<%= note_path(note)%>">View note</a></li>
+</ul>
+<% end %>
+
+<a href="<%= new_note_path %>">Add a new note!</a>

@@ -1,0 +1,31 @@
+<h1>Note for <%= @note.track.title %></h1>
+
+<p><%= @note.note_text %></p>
+
+<p>Written by <%= @note.user.email %></p>
+
+<form action="<%= edit_note_path(@note) %>" method="get">
+    <input type="submit" value="Edit note!"> 
+</form>
+
+<% if current_user.owns_note?(@note) %>
+    <form action="<%= note_path(@note) %>" method="post">
+        <%= auth_token %>
+        <input name="_method" value="delete" type="hidden">
+        <input type="submit" value="Delete note!"> 
+    </form>
+<% end %>
+
+<br>
+
+<form action="<%= band_path(@note.band) %>" method="get">
+    <input type="submit" value="Back to <%= @note.band.name %>!"> 
+</form>
+
+<form action="<%= album_path(@note.album) %>" method="get">
+    <input type="submit" value="Back to <%= @note.album.title %>!"> 
+</form>
+
+<form action="<%= tracks_path %>" method="get">
+    <input type="submit" value="Back to all tracks!"> 
+</form>

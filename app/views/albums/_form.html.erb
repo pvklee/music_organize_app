@@ -1,0 +1,65 @@
+<% action = (album.persisted? ? album_url(album) : albums_url) %>
+<% method = (album.persisted? ? :patch : :post) %>
+<% message = (album.persisted? ? 'Update!' : 'Create!') %>
+<% band_id = (album.persisted? ? album.band.id : params[:band_id].to_i) %>
+
+<%= render 'shared/errors' %>
+<form action="<%= action %>" method="post">
+    <%= auth_token %>
+    <input
+        name="_method"
+        value="<%= method %>"
+        type="hidden">
+    
+    <label for="album_title">Title</label>
+    <input
+        id="album_title"
+        name="album[title]"
+        value="<%= album.title %>"
+        type="text">
+    <br>
+
+    <label for="album_year">Year</label>
+    <input
+        id="album_year"
+        name="album[year]"
+        value="<%= album.year %>"
+        type="text">
+    <br>
+
+    <label for="album_band_id">Band</label>
+    <select
+        id="album_band_id"
+        name="album[band_id]">
+        <option disabled selected>-- select a band --</option>
+        <% Band.all.each do |band| %>
+            <option
+                <%= band.id == band_id ? "selected" : "" %>
+                value="<%= band.id %>">
+                <%= band.name %>
+            </option>
+        <% end %>
+    </select>
+    <br>
+
+    <input
+        type = "radio"
+        name = "album[album_type]"
+        id = "album_studio"
+        value = "studio"
+        <%= album.album_type == 'studio' ? "checked" : "" %>>
+    <label for="album_studio">Studio</label>
+    <input
+        type = "radio"
+        name = "album[album_type]"
+        id = "album_live"
+        value = "live"
+        <%= album.album_type == 'live' ? "checked" : "" %>>
+    <label for="album_live">Live</label>
+    <br>
+
+    <input 
+        type="submit"
+        value="<%= message %>">
+
+</form>
